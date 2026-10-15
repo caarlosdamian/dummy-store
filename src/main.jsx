@@ -6,6 +6,7 @@ import {
   onUncaughtErrorProd,
 } from './lib/reportCaugtError.js';
 import './index.css';
+import Home from './pages/home/Home.jsx';
 
 const container = document.getElementById('container');
 const root = createRoot(container, {
@@ -13,7 +14,9 @@ const root = createRoot(container, {
   onRecoverableError: onRecoverableErrorProd,
   onUncaughtError: onUncaughtErrorProd,
 });
+
 root.render(
   <StrictMode>
+    <Home />
   </StrictMode>,
 );
