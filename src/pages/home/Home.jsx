@@ -1,10 +1,17 @@
-{/* <home></home> */}
+import { Header } from '../../components/header/Header';
 
-const Home = () => {
-  // .jsx => una fn js que retorna html 
-  return (
-    <div>Home</div>
-  )
+{
+  /* <home></home> */
 }
 
-export default Home
+const Home = () => {
+  // .jsx => una fn js que retorna html
+
+  return (
+    <main>
+      <Header />
+    </main>
+  );
+};
+
+export default Home;
