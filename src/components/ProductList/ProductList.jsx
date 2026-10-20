@@ -4,8 +4,7 @@ import './ProductList.css';
 export const ProductList = ({ productos }) => {
   return (
     <section className="product-list">
-      {productos.map((product, index, array) => {
-       
+      {productos?.map((product) => {
         return <ProductCard key={product.id} product={product} />;
       })}
     </section>

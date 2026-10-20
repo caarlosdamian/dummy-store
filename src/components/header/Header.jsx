@@ -8,11 +8,7 @@ export const Header = (props) => {
       <p className="logo">
         Dummy <strong>Shop</strong>
       </p>
-      <SearchInput
-        value={props?.productSearch}
-        onChange={props?.handleSearch}
-        onClear={props?.handleClearBox}
-      />
+      <SearchInput />
       <button className="cart-btn" aria-label="Cart">
         <ShoppingCart size={18} />
         {props.amount > 0 && (

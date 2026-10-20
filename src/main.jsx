@@ -7,6 +7,7 @@ import {
 } from './lib/reportCaugtError.js';
 import './index.css';
 import Home from './pages/home/Home.jsx';
+import { SearchContextProvider } from './components/context/SearchContextProvider.jsx';
 
 const container = document.getElementById('container');
 const root = createRoot(container, {
@@ -17,6 +18,10 @@ const root = createRoot(container, {
 
 root.render(
   <StrictMode>
-    <Home />
+    <SearchContextProvider>
+      <Home />
+      {/*  cualquier componente que nosotros agreguemos aqui
+      puede hacer uso del contexto */}
+    </SearchContextProvider>
   </StrictMode>,
 );

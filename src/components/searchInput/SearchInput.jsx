@@ -1,5 +1,6 @@
-import { useId, useRef } from 'react';
+import { useContext, useId, useRef } from 'react';
 import { Search, X } from 'lucide-react';
+import { SearchContext } from '../../context/searchContext';
 import './SearchInput.css';
 
 // variant: "filled" | "outline"
@@ -13,9 +14,16 @@ export const SearchInput = ({
 }) => {
   const inputId = useId(); // id unico para conectar el label con el input
   const inputRef = useRef(null); // referencia al input para regresarle el foco
+  const { productSearch, handleSearch, handleClearBox } =
+    useContext(SearchContext);
 
   const handleClear = () => {
-    onClear();
+    if (typeof onClear !== 'function') {
+      handleClearBox();
+    } else {
+      onClear();
+    }
+
     // el boton desaparece al borrar, asi que regresamos el foco al input
     inputRef.current.focus();
   };
@@ -40,13 +48,17 @@ export const SearchInput = ({
         name="search"
         type="search"
         className="search-input-field"
-        value={value}
+        value={value || productSearch}
         placeholder={placeholder}
         autoComplete="off"
         enterKeyHint="search"
         onChange={(event) => {
-          console.log('evento',event)
-          onChange(event.target.value)
+          console.log('evento', event);
+          if (typeof onChange !== 'function') {
+            handleSearch(event.target.value);
+          } else {
+            onChange(event.target.value);
+          }
         }}
         onKeyDown={handleKeyDown}
       />

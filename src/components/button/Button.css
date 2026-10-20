@@ -1,0 +1,139 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* sizes */
+.btn--sm {
+  height: 36px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.btn--md {
+  height: 44px;
+  padding: 0 22px;
+  font-size: 15px;
+}
+
+.btn--lg {
+  height: 56px;
+  padding: 0 32px;
+  font-size: 17px;
+}
+
+.btn--full {
+  display: flex;
+  width: 100%;
+}
+
+/* variants */
+.btn--primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn--primary:hover {
+  background: #9A3412;
+}
+
+.btn--secondary {
+  background: white;
+  color: var(--primary);
+  border-color: var(--primary);
+  font-weight: 600;
+}
+
+.btn--secondary:hover {
+  background: #FFF7ED;
+}
+
+.btn--outline {
+  background: white;
+  color: #1C1917;
+  border-color: #1C1917;
+}
+
+.btn--outline:hover {
+  background: #F6F5F2;
+}
+
+.btn--neutral {
+  background: white;
+  color: #1C1917;
+  border: 1px solid #D6D3D1;
+  font-weight: 500;
+}
+
+.btn--neutral:hover {
+  background: #F6F5F2;
+}
+
+.btn--danger {
+  background: #B91C1C;
+  color: white;
+}
+
+.btn--danger:hover {
+  background: #991B1B;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: #B91C1C;
+}
+
+.btn--ghost:hover {
+  background: #FEF2F2;
+}
+
+/* states */
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+/* loading keeps the variant colors; only plain disabled turns grey */
+.btn:disabled:not(.btn--loading) {
+  background: #E7E5E1;
+  color: #57534E;
+  border-color: transparent;
+}
+
+.btn--loading {
+  cursor: progress;
+}
+
+.btn-spinner {
+  flex-shrink: 0;
+  animation: btn-spin 0.8s linear infinite;
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+
+  .btn-spinner {
+    animation-duration: 2s;
+  }
+}
