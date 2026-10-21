@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { ProductList, Header, Button } from '../../components';
+import { ProductList, Header } from '../../components';
 import { SearchContext } from '../../context/searchContext';
 
 // componente padre
@@ -8,8 +8,8 @@ const Home = () => {
   // .jsx => una fn js que retorna html
   // cantidad de elementos en el carriton
   const [products, setProducts] = useState([]);
-  const [isLoading, setisLoading] = useState(true);
-  const {productSearch} = useContext(SearchContext);
+  // const [isLoading, setisLoading] = useState(true);
+  const { productSearch } = useContext(SearchContext);
   // const [isLoading, setisLoading] = useState(true);
 
   const getData = async () => {
@@ -38,9 +38,9 @@ const Home = () => {
 
   // console.log('productos', products);
 
-  setTimeout(() => {
-    setisLoading(false);
-  }, 10000);
+  // setTimeout(() => {
+  //   setisLoading(false);
+  // }, 10000);
 
   const filterList =
     productSearch !== ''
@@ -55,10 +55,7 @@ const Home = () => {
 
   return (
     <main>
-      {/* componentes hijo */}
       <Header amout={10} />
-      {}
-      {isLoading && <Button>Hola</Button>}
       <ProductList productos={filterList} />
     </main>
   );

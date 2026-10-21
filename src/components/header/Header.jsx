@@ -1,20 +1,15 @@
-import { ShoppingCart } from 'lucide-react';
-import './Header.css';
 import { SearchInput } from '../searchInput/SearchInput';
+import { Cart } from '../cart/Cart';
+import './Header.css';
 
-export const Header = (props) => {
+export const Header = () => {
   return (
     <header className="header">
       <p className="logo">
         Dummy <strong>Shop</strong>
       </p>
       <SearchInput />
-      <button className="cart-btn" aria-label="Cart">
-        <ShoppingCart size={18} />
-        {props.amount > 0 && (
-          <span className="cart-btn-count">{props.amount}</span>
-        )}
-      </button>
+      <Cart />
     </header>
   );
 };

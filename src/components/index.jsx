@@ -3,6 +3,7 @@ import { Header } from "./header/Header";
 import { ProductCard } from "./productCard/ProductCard";
 import { ProductList } from "./ProductList/ProductList";
 import { SearchInput } from "./searchInput/SearchInput";
+import { Cart } from "./cart/Cart";
 
 
 export{
@@ -10,5 +11,6 @@ export{
   Header,
   ProductCard,
   ProductList,
-  SearchInput
+  SearchInput,
+  Cart
 } 
