@@ -1,18 +1,17 @@
 import { useContext, useEffect, useState } from 'react';
-import { ProductList, Header } from '../../components';
+import { ProductList } from '../../components';
 import { SearchContext } from '../../context/searchContext';
 
 // componente padre
 const Home = () => {
-  // const { products } = data;
-  // .jsx => una fn js que retorna html
-  // cantidad de elementos en el carriton
   const [products, setProducts] = useState([]);
-  // const [isLoading, setisLoading] = useState(true);
   const { productSearch } = useContext(SearchContext);
-  // const [isLoading, setisLoading] = useState(true);
 
-  const getData = async () => {
+  
+
+  // useLayoutEffect
+  useEffect(() => {
+    const getData = async () => {
     try {
       const response = await fetch('https://dummyjson.com/products');
       const { products } = await response.json();
@@ -22,9 +21,6 @@ const Home = () => {
       console.error(error);
     }
   };
-
-  // useLayoutEffect
-  useEffect(() => {
     getData();
   }, []); // cuando se monta y se desmonta el componente
 
@@ -55,7 +51,6 @@ const Home = () => {
 
   return (
     <main>
-      <Header amout={10} />
       <ProductList productos={filterList} />
     </main>
   );

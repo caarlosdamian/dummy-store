@@ -5,7 +5,8 @@ export const useStore = create()(
   persist(
     (set) => ({
       cart: [],
-      addToCart: (newItem) =>
+      // amount: cuantas unidades agregar (1 por defecto)
+      addToCart: (newItem, amount = 1) =>
         set((state) => {
           // agrega elementos
           // revisar si ya temos ese elemento SI => subir cantidad ,NO=> agregarlo al carrito
@@ -13,12 +14,12 @@ export const useStore = create()(
             (product) => product.id === newItem.id,
           );
           if (!itemAlreadyInCart) {
-            return { cart: [...state.cart, { ...newItem, quantity: 1 }] };
+            return { cart: [...state.cart, { ...newItem, quantity: amount }] };
           } else {
             return {
               cart: state.cart.map((product) => {
                 if (product.id === newItem.id) {
-                  return { ...product, quantity: product.quantity + 1 };
+                  return { ...product, quantity: product.quantity + amount };
                 }
                 return product;
               }),

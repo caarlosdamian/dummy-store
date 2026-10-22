@@ -6,8 +6,9 @@ import {
   onUncaughtErrorProd,
 } from './lib/reportCaugtError.js';
 import './index.css';
-import Home from './pages/home/Home.jsx';
 import { SearchContextProvider } from './components/context/SearchContextProvider.jsx';
+import { RouterProvider } from 'react-router';
+import { router } from './routes/router';
 
 const container = document.getElementById('container');
 const root = createRoot(container, {
@@ -19,7 +20,7 @@ const root = createRoot(container, {
 root.render(
   <StrictMode>
     <SearchContextProvider>
-      <Home />
+      <RouterProvider router={router} />
       {/*  cualquier componente que nosotros agreguemos aqui
       puede hacer uso del contexto */}
     </SearchContextProvider>
