@@ -5,6 +5,7 @@ import { Stars } from '../stars/Stars';
 import { Minus, Plus } from 'lucide-react';
 import { Button } from '../button/Button';
 import { ProductCard } from '../productCard/ProductCard';
+import { useAPI } from '../../hook/useAPI';
 
 const formatDate = (date) =>
   new Date(date).toLocaleDateString('en-US', {
@@ -20,14 +21,16 @@ export const ProductDetail = ({ id }) => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const addToCart = useStore((state) => state.addToCart);
+  const { getProduct: getProductApi, getRelevantProducts } = useAPI();
 
   // trae el producto cuando se monta el componente
   useEffect(() => {
     const getProduct = async () => {
+      // const abort = new AbortController()
       try {
-        const response = await fetch(`https://dummyjson.com/products/${id}`);
-        if (!response.ok) throw new Error('Product not found');
-        setProduct(await response.json());
+        const response = await getProductApi(id);
+        if (response.status !== 200) throw new Error('Product not found');
+        setProduct(response.data);
       } catch (error) {
         console.error(error);
         setHasError(true);
@@ -36,7 +39,7 @@ export const ProductDetail = ({ id }) => {
 
     window.scrollTo(0, 0);
     getProduct();
-  }, [id]);
+  }, [id, getProductApi]);
 
   // trae los productos de la misma categoria cuando ya tenemos el producto
   useEffect(() => {
@@ -44,21 +47,18 @@ export const ProductDetail = ({ id }) => {
 
     const getRelated = async () => {
       try {
-        const response = await fetch(
-          `https://dummyjson.com/products/category/${product.category}?limit=5`,
-        );
-        const { products } = await response.json();
+        const response = await getRelevantProducts(product.category);
+
+        const { products } = response.data;
         // quitamos el producto actual y dejamos maximo 4
-        setRelated(
-          products.filter((item) => item.id !== product.id).slice(0, 4),
-        );
+        setRelated(products.filter((item) => item.id !== product.id).slice(0, 4));
       } catch (error) {
         console.error(error);
       }
     };
 
     getRelated();
-  }, [product]);
+  }, [product,getRelevantProducts]);
 
   if (hasError) {
     return (

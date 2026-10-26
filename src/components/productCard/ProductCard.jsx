@@ -17,7 +17,7 @@ export const ProductCard = ({ product, variant = 'grid', onAddToCart }) => {
           {variant === 'grid' && (
             <p className="product-card-category">{category}</p>
           )}
-          <h3 className="product-card-title">{title}</h3>
+          <h3 className="text-cualquier">{title}</h3>
 
           <div className="product-card-footer">
             <p className="product-card-price">${price}</p>

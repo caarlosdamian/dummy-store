@@ -1,3 +1,9 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cualquier: green;
+}
+
 :root {
   --primary: #C2410C
 }
@@ -6,10 +12,11 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-    font-family: "Space Grotesk", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
 }
 
-a{
+a {
   text-decoration: none;
-  color: inherit;
+  color: inherit; 
+  
 }

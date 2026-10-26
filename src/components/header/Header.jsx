@@ -2,6 +2,8 @@ import { SearchInput } from '../searchInput/SearchInput';
 import { Cart } from '../cart/Cart';
 import './Header.css';
 import { NavLink } from 'react-router';
+import { Button } from '../button/Button';
+import { useState } from 'react';
 
 export const Header = () => {
   return (
