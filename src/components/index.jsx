@@ -2,6 +2,7 @@ import { Button } from "./button/Button";
 import { Header } from "./header/Header";
 import { ProductCard } from "./productCard/ProductCard";
 import { ProductList } from "./ProductList/ProductList";
+import { ProductDetailSkeleton } from "./productDetailSkeleton/ProductDetailSkeleton";
 import { SearchInput } from "./searchInput/SearchInput";
 import { Cart } from "./cart/Cart";
 
@@ -12,5 +13,6 @@ export{
   ProductCard,
   ProductList,
   SearchInput,
-  Cart
+  Cart,
+  ProductDetailSkeleton
 } 

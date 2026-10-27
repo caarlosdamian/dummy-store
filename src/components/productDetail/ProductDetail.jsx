@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useStore } from '../../lib/store';
 import { Link } from 'react-router';
 import { Stars } from '../stars/Stars';
 import { Minus, Plus } from 'lucide-react';
 import { Button } from '../button/Button';
 import { ProductCard } from '../productCard/ProductCard';
+import { ProductDetailSkeleton } from '../productDetailSkeleton/ProductDetailSkeleton';
 import { useAPI } from '../../hook/useAPI';
+import { useFetch } from '../../hook/useFetch';
 
 const formatDate = (date) =>
   new Date(date).toLocaleDateString('en-US', {
@@ -15,52 +17,41 @@ const formatDate = (date) =>
   });
 
 export const ProductDetail = ({ id }) => {
-  const [product, setProduct] = useState(null);
-  const [related, setRelated] = useState([]);
-  const [hasError, setHasError] = useState(false);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const addToCart = useStore((state) => state.addToCart);
-  const { getProduct: getProductApi, getRelevantProducts } = useAPI();
+  const { getProduct, getRelevantProducts } = useAPI();
 
   // trae el producto cuando se monta el componente
-  useEffect(() => {
-    const getProduct = async () => {
-      // const abort = new AbortController()
-      try {
-        const response = await getProductApi(id);
-        if (response.status !== 200) throw new Error('Product not found');
-        setProduct(response.data);
-      } catch (error) {
-        console.error(error);
-        setHasError(true);
-      }
-    };
+  const productPromise = useCallback(async () => {
+    const response = await getProduct(id);
+    if (response.status !== 200) throw new Error('Product not found');
+    return response.data;
+  }, [id, getProduct]);
 
-    window.scrollTo(0, 0);
-    getProduct();
-  }, [id, getProductApi]);
+  const {
+    data: product,
+    isLoading,
+    isError,
+  } = useFetch(productPromise, null);
 
   // trae los productos de la misma categoria cuando ya tenemos el producto
+  const relatedPromise = useCallback(async () => {
+    if (!product) return [];
+
+    const response = await getRelevantProducts(product.category);
+    const { products } = response.data;
+    // quitamos el producto actual y dejamos maximo 4
+    return products.filter((item) => item.id !== product.id).slice(0, 4);
+  }, [product, getRelevantProducts]);
+
+  const { data: related } = useFetch(relatedPromise, []);
+
   useEffect(() => {
-    if (!product) return;
+    window.scrollTo(0, 0);
+  }, [id]);
 
-    const getRelated = async () => {
-      try {
-        const response = await getRelevantProducts(product.category);
-
-        const { products } = response.data;
-        // quitamos el producto actual y dejamos maximo 4
-        setRelated(products.filter((item) => item.id !== product.id).slice(0, 4));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getRelated();
-  }, [product,getRelevantProducts]);
-
-  if (hasError) {
+  if (isError) {
     return (
       <div className="product-page-message">
         <h1>Product not found</h1>
@@ -69,12 +60,9 @@ export const ProductDetail = ({ id }) => {
     );
   }
 
-  if (!product) {
-    return (
-      <p className="product-page-message" role="status">
-        Loading product...
-      </p>
-    );
+  // !product cubre el primer render, antes de que useFetch marque isLoading
+  if (isLoading || !product) {
+    return <ProductDetailSkeleton />;
   }
 
   const {
