@@ -1,8 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 
-export const useFetch = (promesa,initialValue) => {
+interface FetchState<T> {
+  isLoading: boolean;
+  isError: boolean;
+  error: unknown;
+  data: T;
+}
+
+// T es el tipo de lo que resuelve la promesa (ej. Product[], Product | null)
+export const useFetch = <T>(promesa: () => Promise<T>, initialValue: T) => {
   // empieza en true porque siempre se hace fetch al montar
-  const [info, setInfo] = useState({
+  const [info, setInfo] = useState<FetchState<T>>({
     isLoading: true,
     isError: false,
     error: null,

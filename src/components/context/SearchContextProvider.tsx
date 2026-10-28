@@ -1,23 +1,32 @@
-import { useCallback, useMemo, useState } from 'react';
-import { SearchContext } from '../../context/searchContext';
+import { useCallback, useMemo, useState, type PropsWithChildren } from 'react';
+import {
+  SearchContext,
+  type SearchContextI,
+} from '../../context/searchContext';
+
+// interface SearchContextProviderProps {
+//   children: ReactNode;
+// }
 
 // TODO(perf): Every consumer of this context (SearchInput, Home) re-renders
 // whenever the context value changes. The notes below mark where that can be
 // reduced.
-export const SearchContextProvider = ({ children }) => {
+export const SearchContextProvider = ({
+  children,
+}: PropsWithChildren) => {
   // TODO(perf): This state changes on every keystroke, so Home re-runs its
   // product filter on every key press. Options:
   //   - In Home, read `useDeferredValue(productSearch)` so filtering doesn't
   //     block typing.
   //   - Or debounce the value (~300ms) before Home uses it. (custom hook )
-  const [productSearch, setProductSearch] = useState('');
+  const [productSearch, setProductSearch] = useState<string>('');
 
   // TODO(perf): These handlers are new functions on every render. Wrap them in
   // `useCallback`, or skip the wrappers: `setProductSearch` is already stable
   // and `handleClearBox` is just `() => setProductSearch('')`.
-  const handleSearch = useCallback((e) => {
+  const handleSearch = useCallback((e: string) => {
     setProductSearch(e);
-  }, []); // contrato 
+  }, []); // contrato
 
   const handleClearBox = useCallback(() => {
     setProductSearch('');
@@ -25,7 +34,7 @@ export const SearchContextProvider = ({ children }) => {
   // TODO(perf): The `value` object below is rebuilt on every render, so all
   // consumers re-render even when nothing in it changed (for example when a
   // parent of this provider re-renders). Memoize it:
-  const value = useMemo(
+  const value = useMemo<SearchContextI>(
     () => ({ productSearch, handleSearch, handleClearBox }),
     [productSearch, handleSearch, handleClearBox],
   );

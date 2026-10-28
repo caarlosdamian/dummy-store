@@ -4,6 +4,7 @@ import { SearchContext } from '../../context/searchContext';
 import { useAPI } from '../../hook/useAPI';
 import { useDebounced } from '../../hook/useDebouce';
 import { useFetch } from '../../hook/useFetch';
+import type { Product } from '../../types';
 
 const Home = () => {
   const { productSearch } = useContext(SearchContext);
@@ -22,10 +23,15 @@ const Home = () => {
     }
   }, [debounceValue, searchProducts, getProducts]);
 
-  const { data: products, isError, isLoading } = useFetch(promise,[]);
+  const {
+    data: products,
+    isError,
+    isLoading,
+  } = useFetch<Product[]>(promise, []);
+  // products.split() // que typo es este valor (string,array,number,objet,fn,undefine,null)
 
   return (
-    <main className='flex items-center justify-center'>
+    <main className="flex items-center justify-center">
       <ProductList
         productos={products}
         isLoading={isLoading}

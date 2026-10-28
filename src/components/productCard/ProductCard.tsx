@@ -1,9 +1,21 @@
 import { Plus } from 'lucide-react';
 import './ProductCard.css';
 import { Link } from 'react-router';
+import type { Product } from '../../types';
+
+type Variant = 'grid' | 'compact' | 'mini';
+interface Props {
+  product: Product;
+  variant?: Variant;
+  onAddToCart: (p: Product) => void;
+}
 
 // variant: "grid" (desktop) | "compact" (mobile) | "mini" (related)
-export const ProductCard = ({ product, variant = 'grid', onAddToCart }) => {
+export const ProductCard = ({
+  product,
+  variant = 'grid',
+  onAddToCart,
+}: Props) => {
   const { title, category, price, thumbnail, id } = product;
 
   return (
