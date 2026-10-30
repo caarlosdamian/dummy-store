@@ -1,5 +1,15 @@
 import { LoaderCircle } from 'lucide-react';
 import './Button.css';
+import type { ButtonHTMLAttributes, PropsWithChildren } from 'react';
+
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant: 'primary' | 'secondary' | 'outline' | 'neutral' | 'danger' | 'ghost'; // la variante de estilos
+  size: "sm" | "md" | "lg"; // el tamaño del boton
+  disabled: boolean; // deshabilita el boton
+  loading: boolean; // muestra el spinner y bloquea el boton mientras carga
+  fullWidth: boolean; // el boton ocupa todo el ancho disponible
+  type: string;
+}
 
 // variant: "primary" | "secondary" | "outline" | "neutral" | "danger" | "ghost"
 // size: "sm" | "md" | "lg"
@@ -13,7 +23,7 @@ export const Button = ({
   type = 'button', // "button" por defecto para no enviar formularios sin querer
   onClick, // funcion que se ejecuta al hacer click
   ...rest // cualquier otro atributo (aria-label, className, etc.)
-}) => {
+}: Props) => {
   const classes = [
     'btn',
     `btn--${variant}`,

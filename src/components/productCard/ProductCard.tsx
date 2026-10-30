@@ -3,7 +3,7 @@ import './ProductCard.css';
 import { Link } from 'react-router';
 import type { Product } from '../../types';
 
-type Variant = 'grid' | 'compact' | 'mini';
+export type Variant = 'grid' | 'compact' | 'mini';
 interface Props {
   product: Product;
   variant?: Variant;
@@ -28,7 +28,9 @@ export const ProductCard = ({
 
       <div className="product-card-body">
         {variant === 'grid' && (
-          <p className="product-card-category">{category}</p>
+          <p className="product-card-category" data-testid="category">
+            {category}
+          </p>
         )}
         <h3 className="text-cualquier">{title}</h3>
 
@@ -37,6 +39,7 @@ export const ProductCard = ({
 
           {variant === 'grid' && (
             <button
+              data-testid="product-card-btn"
               className="product-card-btn"
               onClick={(event) => {
                 event.preventDefault();
